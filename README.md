@@ -1,19 +1,18 @@
 # Media Horde AMP
 
-A GitHub-friendly offline media launcher for giant local libraries. The app reads a `playlist.txt` file that lives in the same folder as `index.html`, which is a hell of a lot saner than welding your entire media database into one HTML file and calling it architecture.
+An offline media launcher for giant local libraries. The app reads a `playlist.txt` file that lives in the same folder as `index.html`.
 
 ![Media Horde AMP banner](assets/img/media-horde-amp-banner.svg)
 
 ## What it does
 
-Media Horde AMP is meant for messy personal media archives, USB drives, school-safe offline launchers, and static hosting setups where you want one page that can:
+Media Horde AMP is meant for static hosting setups where you want one page that can:
 
 - load audio, video, and HTML/web entries from `playlist.txt`
 - search, sort, and filter by type, folder, favorites, and recents
 - preview audio album art and play audio/video directly in the page
 - open HTML items in a new tab
 - keep favorites, recents, and volume in browser storage
-- work on GitHub Pages
 - fall back to manual `playlist.txt` loading if `file://` blocks `fetch()`
 
 ## Repo layout
@@ -169,22 +168,4 @@ PowerShell wrapper for people who enjoy pain with more colors.
 - HTML items open in a new tab.
 - Favorites, recent items, and volume are stored in browser local storage.
 - If size totals show as unknown, rebuild the playlist with the included script so it writes `size=` metadata.
-- If filenames contain spaces or weird symbols, keep the paths exactly as they are relative to the repo root. The app URL-encodes them automatically because browsers love turning simple things into tiny bureaucracies.
-
-## Good commit ideas
-
-```text
-Initial Media Horde AMP repo architecture with playlist.txt support
-Add recent items, download action, and playlist builder wrappers
-Document local and GitHub Pages setup
-```
-
-## Future ideas
-
-- grid/card view for HTML games
-- playlist export for favorites
-- theme switcher
-- drag-and-drop playlist import
-- optional thumbnail cache for videos
-
-Because every launcher eventually becomes a desktop environment if you neglect it long enough.
+- If filenames contain spaces or weird symbols, keep the paths exactly as they are relative to the repo root.
