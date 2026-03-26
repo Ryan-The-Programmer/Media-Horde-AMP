@@ -23,6 +23,9 @@ window.MediaHorde = window.MediaHorde || {};
     playlistBody: document.getElementById("playlistBody"),
     reloadPlaylistBtn: document.getElementById("reloadPlaylistBtn"),
     downloadSelectedBtn: document.getElementById("downloadSelectedBtn"),
+    clearSearchBtn: document.getElementById("clearSearchBtn"),
+    clearRecentsBtn: document.getElementById("clearRecentsBtn"),
+    clearFavoritesBtn: document.getElementById("clearFavoritesBtn"),
     playlistFileInput: document.getElementById("playlistFileInput"),
     openSelectedBtn: document.getElementById("openSelectedBtn"),
     playFirstVisibleBtn: document.getElementById("playFirstVisibleBtn"),
@@ -64,7 +67,13 @@ window.MediaHorde = window.MediaHorde || {};
   state.favorites = persisted.favorites || {};
   state.recentMap = persisted.recentMap || {};
   state.volume = typeof persisted.volume === "number" ? persisted.volume : config.defaultVolume;
+  state.filter = persisted.uiPrefs?.filter || "all";
+  state.folderFilter = persisted.uiPrefs?.folderFilter || "all";
+  state.searchQuery = persisted.uiPrefs?.searchQuery || "";
+  state.sort = persisted.uiPrefs?.sort || "playlist";
   elements.volumeBar.value = String(Math.round(state.volume * 100));
+  elements.searchInput.value = state.searchQuery;
+  elements.sortSelect.value = state.sort;
 
   const appUi = ui.createUi(elements, state, {
     refresh,
@@ -102,7 +111,13 @@ window.MediaHorde = window.MediaHorde || {};
     utils.storageSave(config.localStorageKey, {
       favorites: state.favorites,
       recentMap: state.recentMap,
-      volume: state.volume
+      volume: state.volume,
+      uiPrefs: {
+        filter: state.filter,
+        folderFilter: state.folderFilter,
+        searchQuery: state.searchQuery,
+        sort: state.sort
+      }
     });
   }
 
@@ -111,6 +126,7 @@ window.MediaHorde = window.MediaHorde || {};
   }
 
   function refresh(renderFolders){
+    saveState();
     return appUi.refresh(renderFolders);
   }
 
@@ -243,11 +259,13 @@ window.MediaHorde = window.MediaHorde || {};
 
     elements.searchInput.addEventListener("input", event => {
       state.searchQuery = event.target.value || "";
+      saveState();
       refresh(false);
     });
 
     elements.sortSelect.addEventListener("change", event => {
       state.sort = event.target.value || "playlist";
+      saveState();
       refresh(false);
     });
 
@@ -271,8 +289,44 @@ window.MediaHorde = window.MediaHorde || {};
       state.items = result.items;
       state.folderFilter = "all";
       state.filter = "all";
+      state.searchQuery = "";
+      elements.searchInput.value = "";
+      saveState();
       afterPlaylistLoaded(result.source);
       event.target.value = "";
+    });
+
+    elements.clearSearchBtn.addEventListener("click", () => {
+      if (!state.searchQuery) return;
+      state.searchQuery = "";
+      elements.searchInput.value = "";
+      saveState();
+      refresh(false);
+      appUi.setStatus("Search cleared.", "Showing results using your current filter and folder.");
+    });
+
+    elements.clearRecentsBtn.addEventListener("click", () => {
+      const recentCount = Object.keys(state.recentMap).length;
+      if (!recentCount) {
+        appUi.setStatus("No recents to clear.", "Open media to build a recent history.");
+        return;
+      }
+      state.recentMap = {};
+      saveState();
+      refresh(false);
+      appUi.setStatus(`Cleared ${recentCount} recent item(s).`, "Recent sorting now reflects an empty history.");
+    });
+
+    elements.clearFavoritesBtn.addEventListener("click", () => {
+      const favoriteCount = Object.keys(state.favorites).length;
+      if (!favoriteCount) {
+        appUi.setStatus("No favorites to clear.", "Tap the star button on any row to favorite it.");
+        return;
+      }
+      state.favorites = {};
+      saveState();
+      refresh(false);
+      appUi.setStatus(`Cleared ${favoriteCount} favorite(s).`, "Your media is now equally unloved.");
     });
 
     elements.openSelectedBtn.addEventListener("click", openSelected);
@@ -328,6 +382,16 @@ window.MediaHorde = window.MediaHorde || {};
         event.preventDefault();
         const item = selectedItem();
         if (item) triggerDownload(item);
+      } else if (event.key === "/") {
+        event.preventDefault();
+        elements.searchInput.focus();
+      } else if (event.key === "Escape") {
+        if (!state.searchQuery) return;
+        event.preventDefault();
+        state.searchQuery = "";
+        elements.searchInput.value = "";
+        saveState();
+        refresh(false);
       }
     });
   }

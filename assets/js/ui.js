@@ -219,7 +219,7 @@ window.MediaHorde = window.MediaHorde || {};
         filteredItems.length
           ? `Showing ${filteredItems.length} item(s).`
           : "No visible items. Your filters murdered the list.",
-        "Shortcuts: Space play/pause • Enter open • ↑/↓ move selection"
+        "Shortcuts: / focus search • Esc clear search • Space play/pause • Enter open • ↑/↓ move selection"
       );
 
       return { filteredItems, selectedItem };
