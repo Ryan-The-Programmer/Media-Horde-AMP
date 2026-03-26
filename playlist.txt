@@ -1,0 +1,21 @@
+# Media Horde AMP playlist
+# Put this file in the same folder as index.html.
+# One relative path per line.
+# Blank lines and comments are ignored.
+#
+# Format:
+# relative/path/to/file.ext | key=value | key=value
+#
+# Examples:
+# music/song.mp3
+# videos/demo.mp4 | title=Cool Demo | size=42 MB
+# games/mygame/index.html | title=My Game | type=html
+# music/song.mp3 | art=covers/song.jpg | title=Song With Art
+#
+# Supported keys:
+# title=
+# type=
+# folder=
+# size=
+# art=
+# cover=
