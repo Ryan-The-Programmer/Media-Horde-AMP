@@ -48,5 +48,5 @@
 
   <text x="404" y="88" font-family="Tahoma, Segoe UI, sans-serif" font-size="18" fill="#bae6fd" letter-spacing="3">OFFLINE MEDIA LAUNCHER</text>
   <text x="404" y="344" font-family="Tahoma, Segoe UI, sans-serif" font-size="46" font-weight="700" fill="#f8fafc">MEDIA HORDE AMP</text>
-  <text x="404" y="380" font-family="Tahoma, Segoe UI, sans-serif" font-size="22" fill="#cbd5e1">playlist.txt powered • GitHub-ready • audio, video, HTML</text>
+  <text x="404" y="380" font-family="Tahoma, Segoe UI, sans-serif" font-size="22" fill="#cbd5e1">playlist.txt powered • audio, video, HTML</text>
 </svg>
