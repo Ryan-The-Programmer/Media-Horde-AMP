@@ -151,13 +151,17 @@ PowerShell wrapper for people who enjoy pain with more colors.
 ## Features in the launcher
 
 - **Search** by title, filename, folder, extension, favorite, or recent status
+- **Saved UI state** for search text, sort mode, active filter, and folder filter
 - **Filters** for all, audio, video, web, favorites, and recents
 - **Sort modes** for playlist order, name, folder, type, and recently opened
 - **Playback** for audio and video with transport controls
 - **Visualizer** for audio playback
 - **Album art** support with `art=` or `cover=`
 - **Download selected** button and `Ctrl + D`
+- **Quick reset controls** for search, favorites, and recents
 - **Keyboard shortcuts**
+  - `/` focus search
+  - `Esc` clear search
   - `Enter` open selected
   - `Space` play/pause
   - `Up / Down` move selection
